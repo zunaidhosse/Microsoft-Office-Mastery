@@ -3,22 +3,17 @@
   "name": "Office Mastery (অফিস মাস্টার)",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
+      "src": "https://img.icons8.com/color/192/microsoft-office-2019.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "https://img.icons8.com/color/512/microsoft-office-2019.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#2b579a",
   "background_color": "#ffffff"
