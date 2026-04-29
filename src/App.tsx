@@ -223,6 +223,17 @@ export default function App() {
         masteryLevel: 'Level',
         pinned: 'Pinned'
       },
+      categories_map: {
+        All: 'All Categories',
+        General: 'General',
+        Editing: 'Editing',
+        Formatting: 'Formatting',
+        Navigation: 'Navigation',
+        Review: 'Review',
+        View: 'View',
+        Data: 'Data',
+        Selection: 'Selection'
+      },
       installPopup: {
         title: 'Install Office Mastery',
         desc: 'Install this app on your device for a faster, offline experience and easy access.',
@@ -282,6 +293,17 @@ export default function App() {
         masteryLevel: 'লেভেল',
         pinned: 'পিন করা'
       },
+      categories_map: {
+        All: 'সব ক্যাটাগরি',
+        General: 'সাধারণ',
+        Editing: 'এডিটিং',
+        Formatting: 'ফরম্যাটিং',
+        Navigation: 'নেভিগেশন',
+        Review: 'রিভিউ',
+        View: 'ভিউ',
+        Data: 'ডেটা',
+        Selection: 'সিলেকশন'
+      },
       installPopup: {
         title: 'অফিস মাস্টার ইনস্টল করুন',
         desc: 'দ্রুত এবং অফলাইন ব্যবহারের জন্য অ্যাপটি আপনার ফোনে ইনস্টল করুন।',
@@ -337,13 +359,32 @@ export default function App() {
         stats: 'إتقاني',
         export: 'نسخ احتياطي',
         import: 'استعادة البيانات',
-        masteryLevel: 'مستوى'
+        masteryLevel: 'مستوى',
+        darkMode: 'الوضع الداكن',
+        pinned: 'مثبت'
+      },
+      categories_map: {
+        All: 'جميع الفئات',
+        General: 'عام',
+        Editing: 'تحرير',
+        Formatting: 'تنسيق',
+        Navigation: 'تنقل',
+        Review: 'مراجعة',
+        View: 'عرض',
+        Data: 'بيانات',
+        Selection: 'تحديد'
       },
       installPopup: {
-        title: 'تثبيت অফিস মাস্টার',
+        title: 'تثبيت إتقان المكتب',
         desc: 'قم بتثبيت هذا التطبيق على جهازك للحصول على تجربة أسرع للوصول السهل.',
         btn: 'تنزيل وتثبيت',
         later: 'ربما لاحقا'
+      },
+      common: {
+        copied: 'نسخ!',
+        copy: 'نسخ',
+        added: 'تمت الإضافة للمفضلة',
+        removed: 'تمت الإزالة من المفضلة'
       },
       custom: {
         addTitle: 'إضافة اختصار جديد',
@@ -385,6 +426,8 @@ export default function App() {
       if (!searchQuery) return favoriteShortcuts;
       return favoriteShortcuts.filter(s => 
         s.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.actionBn.includes(searchQuery) ||
+        s.actionAr.includes(searchQuery) ||
         s.key.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -392,6 +435,8 @@ export default function App() {
       if (!searchQuery) return customShortcuts;
       return customShortcuts.filter(s => 
         s.action.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.actionBn.includes(searchQuery) ||
+        s.actionAr.includes(searchQuery) ||
         s.key.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -447,7 +492,10 @@ export default function App() {
   };
 
   return (
-    <div className={cn("min-h-screen bg-neutral-100 flex flex-col font-sans", language === 'ar' && "rtl")}>
+    <div 
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
+      className={cn("min-h-screen bg-neutral-100 flex flex-col font-sans", language === 'ar' && "rtl")}
+    >
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-neutral-200">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
@@ -567,7 +615,7 @@ export default function App() {
                       />
                     </div>
                     <p className="mt-3 text-xs font-bold text-blue-100 uppercase tracking-widest text-center sm:text-left">
-                      {favorites.length + customShortcuts.length} {t.shortcuts} Total Mastered
+                      {favorites.length + customShortcuts.length} {t.shortcuts}
                     </p>
                   </div>
                   <div className="flex gap-4 sm:flex-col lg:flex-row">
@@ -579,7 +627,7 @@ export default function App() {
                     <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-center min-w-[120px]">
                       <Plus size={20} className="mx-auto mb-2 text-green-300" />
                       <div className="text-2xl font-black">{customShortcuts.length}</div>
-                      <div className="text-[10px] uppercase font-black opacity-60 tracking-widest">Custom</div>
+                      <div className="text-[10px] uppercase font-black opacity-60 tracking-widest">{t.menu.myShortcuts}</div>
                     </div>
                   </div>
                 </div>
@@ -758,7 +806,7 @@ export default function App() {
                           : "bg-white text-neutral-500 hover:bg-neutral-100 border border-neutral-200"
                       )}
                     >
-                      {cat === 'All' ? t.menu.all : cat}
+                      {(t as any).categories_map[cat] || cat}
                     </button>
                   ))}
                 </div>
@@ -790,7 +838,7 @@ export default function App() {
                       <div className="flex-1">
                         <div className={cn("flex items-center gap-2 mb-1", language === 'ar' && "flex-row-reverse")}>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-                            {sc.category}
+                            {(t as any).categories_map[sc.category] || sc.category}
                           </span>
                         </div>
                         <p className={cn("text-neutral-900 font-bold text-lg mb-1 leading-tight group-hover:text-blue-600 transition-colors line-clamp-1")}>
@@ -888,7 +936,7 @@ export default function App() {
                     className="w-full max-w-lg text-center"
                   >
                     <div className="inline-block px-4 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6">
-                      {practiceShortcut?.category}
+                      {(t as any).categories_map[practiceShortcut?.category || 'General'] || practiceShortcut?.category}
                     </div>
                     <h3 className="text-3xl sm:text-4xl font-black text-neutral-900 mb-12 leading-tight">
                       {practiceShortcut ? getShortcutAction(practiceShortcut) : '...'}
@@ -985,7 +1033,7 @@ export default function App() {
                       <div className="flex-1">
                         <div className={cn("flex items-center gap-2 mb-1", language === 'ar' && "flex-row-reverse")}>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-                             {sc.category}
+                             {(t as any).categories_map[sc.category] || sc.category}
                           </span>
                         </div>
                         <p className="text-neutral-900 font-bold text-lg mb-1 leading-tight group-hover:text-amber-600 transition-colors">
@@ -1097,10 +1145,10 @@ export default function App() {
                         value={newShortcut.category}
                         onChange={e => setNewShortcut({...newShortcut, category: e.target.value})}
                       >
-                        <option>General</option>
-                        <option>Editing</option>
-                        <option>Formatting</option>
-                        <option>Navigation</option>
+                        <option value="General">{(t as any).categories_map['General']}</option>
+                        <option value="Editing">{(t as any).categories_map['Editing']}</option>
+                        <option value="Formatting">{(t as any).categories_map['Formatting']}</option>
+                        <option value="Navigation">{(t as any).categories_map['Navigation']}</option>
                       </select>
                     </div>
                   </div>
@@ -1124,7 +1172,7 @@ export default function App() {
                       <div className="flex-1">
                         <div className={cn("flex items-center gap-2 mb-1", language === 'ar' && "flex-row-reverse")}>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-                            {sc.category}
+                            {(t as any).categories_map[sc.category] || sc.category}
                           </span>
                         </div>
                         <p className="text-neutral-900 font-bold text-lg mb-1 leading-tight group-hover:text-green-600 transition-colors">
@@ -1226,7 +1274,7 @@ export default function App() {
                             </div>
                             <div>
                               <div className="text-xs font-black uppercase tracking-widest text-neutral-400 mb-0.5">
-                                {app.name} • {s.category}
+                                {app.name} • {(t as any).categories_map[s.category] || s.category}
                               </div>
                               <div className="text-neutral-900 font-bold group-hover:text-blue-600 transition-colors">
                                 {getShortcutAction(s)}
