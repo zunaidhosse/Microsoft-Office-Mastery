@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+  }
+}
+
+.shortcut-key {
+  @apply px-1.5 py-0.5 rounded bg-neutral-100 border border-neutral-300 font-mono text-xs font-semibold shadow-sm;
+}
